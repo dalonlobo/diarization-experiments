@@ -1,5 +1,5 @@
 # Byte-compiled / optimized / DLL files
-__pycache__/
+__PYCACHE__/
 *.py[cod]
 *$py.class
 
@@ -101,7 +101,9 @@ ENV/
 .mypy_cache/
 
 # custom ignores
-tisv-*/
+tisv*/
 Results/
 nohup*/
 data/
+nohup*
+*.b
