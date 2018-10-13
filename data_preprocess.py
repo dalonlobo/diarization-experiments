@@ -8,7 +8,7 @@ from utils import keyword_spot
 config = get_config()   # get arguments from parser
 
 # downloaded dataset path
-audio_path= r'C:\Users\LG\Documents\DataSets\Vctk\data'                                          # utterance dataset
+audio_path= r'/datadrive2/dalon/diarization-experiments/Speaker_Verification/data/VCTK-Corpus/wav48'                                          # utterance dataset
 clean_path = r'C:\Users\LG\Documents\Deep_learning\speaker_vertification\clean_testset_wav'  # clean dataset
 noisy_path = r'C:\Users\LG\Documents\Deep_learning\speaker_vertification\noisy_testset_wav'  # noisy dataset
 
@@ -104,16 +104,28 @@ def save_spectrogram_tisv():
     print("train : %d, test : %d"%(train_speaker_num, total_speaker_num-train_speaker_num))
     for i, folder in enumerate(os.listdir(audio_path)):
         speaker_path = os.path.join(audio_path, folder)     # path of each speaker
+        speaker_name = os.path.basename(speaker_path)
         print("%dth speaker processing..."%i)
         utterances_spec = []
         k=0
         for utter_name in os.listdir(speaker_path):
             utter_path = os.path.join(speaker_path, utter_name)         # path of each utterance
             utter, sr = librosa.core.load(utter_path, config.sr)        # load utterance audio as time series data
+            
+            # remove below code ----------------------
+            # Get the duration
+#             duration = librosa.get_duration(utter, sr)
+#             # Duration of each window
+#             duration_per_frame = (duration / utter.shape[0])
+#             print(f'Min length of utterance: {utter_min_len * duration_per_frame}s')
+#             print(f'Duration: {duration}\nDuration per frame: {duration_per_frame}s\nMin length of utterance: {utter_min_len * duration_per_frame}s')
+            # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            
             intervals = librosa.effects.split(utter, top_db=20)         # voice activity detection (Below 20db is considered silence)
             for interval in intervals:
                 if (interval[1]-interval[0]) > utter_min_len:           # If partial utterance is sufficient long,
                     utter_part = utter[interval[0]:interval[1]]         # save first and last 180 frames of spectrogram.
+#                     print(f'{int(config.window * sr)},{int(config.hop * sr)}')
                     S = librosa.core.stft(y=utter_part, n_fft=config.nfft,
                                           win_length=int(config.window * sr), hop_length=int(config.hop * sr))
                     S = np.abs(S) ** 2
@@ -126,13 +138,13 @@ def save_spectrogram_tisv():
         utterances_spec = np.array(utterances_spec)
         print(utterances_spec.shape)
         if i<train_speaker_num:      # save spectrogram as numpy file
-            np.save(os.path.join(config.train_path, "speaker%d.npy"%i), utterances_spec)
+            np.save(os.path.join(config.train_path, "speaker-%s-%d.npy"%(speaker_name, i)), utterances_spec)
         else:
-            np.save(os.path.join(config.test_path, "speaker%d.npy"%(i-train_speaker_num)), utterances_spec)
+            np.save(os.path.join(config.test_path, "speaker-%s-%d.npy"%(speaker_name, i-train_speaker_num)), utterances_spec)
 
 
 if __name__ == "__main__":
-    extract_noise()
+#     extract_noise()
     if config.tdsv:
         save_spectrogram_tdsv()
     else:
