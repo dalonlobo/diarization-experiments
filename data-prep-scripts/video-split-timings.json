@@ -1,0 +1,112 @@
+[
+    {
+        "name": "zPFptdATk_s-Interviewer",
+        "timings": [
+            {
+                "start": "00:07",
+                "end": "00:16"
+            },
+            {
+                "start": "00:22",
+                "end": "00:35"
+            },
+            {
+                "start": "00:52",
+                "end": "01:03"
+            },
+            {
+                "start": "06:24",
+                "end": "06:49"
+            }
+        ]
+    },
+    {
+        "name": "zPFptdATk_s-Interviewee",
+        "timings": [
+            {
+                "start": "01:11",
+                "end": "03:00"
+            },
+            {
+                "start": "06:57",
+                "end": "07:40"
+            }
+        ]
+    },
+    {
+        "name": "GkOn86EtdNQ-Obama",
+        "timings": [
+            {
+                "start": "00:06",
+                "end": "00:40"
+            },
+            {
+                "start": "03:30",
+                "end": "04:26"
+            },
+            {
+                "start": "06:25",
+                "end": "07:25"
+            }
+        ]
+    },
+    {
+        "name": "GkOn86EtdNQ-Interviewer",
+        "timings": [
+            {
+                "start": "10:44",
+                "end": "10:55"
+            },
+            {
+                "start": "11:04",
+                "end": "11:31"
+            },
+            {
+                "start": "20:20",
+                "end": "20:45"
+            }
+        ]
+    },
+    {
+        "name": "e9TC12UQ8og-Interviewer",
+        "timings": [
+            {
+                "start": "00:45",
+                "end": "01:01"
+            },
+            {
+                "start": "01:15",
+                "end": "01:32"
+            },
+            {
+                "start": "03:50",
+                "end": "04:09"
+            },
+            {
+                "start": "08:01",
+                "end": "08:06"
+            }
+        ]
+    },
+    {
+        "name": "e9TC12UQ8og-Interviewee",
+        "timings": [
+            {
+                "start": "02:32",
+                "end": "03:13"
+            },
+            {
+                "start": "06:27",
+                "end": "06:51"
+            },
+            {
+                "start": "08:12",
+                "end": "08:41"
+            },
+            {
+                "start": "11:06",
+                "end": "11:19"
+            }
+        ]
+    }
+]
