@@ -58,6 +58,14 @@ Random selected utterances are used. I test the model after 60000 iteration. Equ
 
 <img src=Results/TISV_결과.JPG width="400">
 
+# Installation steps:
+
+1. conda env create -f environment.yml
+2. source activate diarizer
+3. pip install pysrt
+4. python full-pipeline.py GkOn86EtdNQ
+
+
 
 
 
