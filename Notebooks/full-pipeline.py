@@ -196,7 +196,9 @@ if __name__ == "__main__":
     labels = kmeans.labels_
 
     subs = pysrt.open(srt_path, encoding="utf-8")
-    convert_to_s = lambda st: (st.hours * 60 * 60) + (st.minutes * 60) + (st.seconds) #+ \
+    convert_to_s = lambda st: (st.hours * 60 * 60) + \
+                                (st.minutes * 60) +\
+                                (st.seconds) #+ \
                                 #(st.milliseconds / 1000)
     get_start_and_end = lambda sub: (convert_to_s(sub.start), convert_to_s(sub.end))
 
@@ -205,9 +207,12 @@ if __name__ == "__main__":
         speakers = []
     #     speakers_intervals = []
         for idx, interval in enumerate(intervals_gt_s):
-            interval[0], interval[1] = int(interval[0]), int(interval[1])
-            if interval[0] <= start <= interval[1] or interval[0] <= end <= interval[1]            or (start <= interval[0] and interval[1] <= end):
+    #         interval[0], interval[1] = int(interval[0]), int(interval[1])
+            if interval[0] <= start <= interval[1] or interval[0] <= end <= interval[1]\
+                    or (start <= interval[0] and interval[1] <= end):
                 speakers.append(labels[idx])
+                if idx < len(intervals_gt_s) - 1 and intervals_gt_s[idx + 1][0] - interval[1] >= tisv_frame_duration_s:
+                    speakers.append(-1)
                 
         if speakers:
     #         print(speakers)
