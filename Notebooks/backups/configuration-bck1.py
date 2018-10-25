@@ -30,12 +30,12 @@ data_arg.add_argument('--nfft', type=int, default=512, help="fft kernel size")
 data_arg.add_argument('--window', type=float, default=0.025, help="window length") # 25ms
 data_arg.add_argument('--hop', type=float, default=0.01, help="hop size") # 10ms
 data_arg.add_argument('--tdsv_frame', type=int, default=80, help="frame number of utterance of tdsv")
-data_arg.add_argument('--tisv_frame', type=int, default=50, help="max frame number of utterances of tdsv")
+data_arg.add_argument('--tisv_frame', type=int, default=180, help="max frame number of utterances of tdsv")
 
 # Model Parameters
 model_arg = parser.add_argument_group('Model')
-model_arg.add_argument('--hidden', type=int, default=768, help="hidden state dimension of lstm")
-model_arg.add_argument('--proj', type=int, default=256, help="projection dimension of lstm")
+model_arg.add_argument('--hidden', type=int, default=128, help="hidden state dimension of lstm")
+model_arg.add_argument('--proj', type=int, default=64, help="projection dimension of lstm")
 model_arg.add_argument('--num_layer', type=int, default=3, help="number of lstm layers")
 model_arg.add_argument('--restore', type=str2bool, default=False, help="restore model or not")
 model_arg.add_argument('--model_path', type=str, default='./tisv_model', help="model directory to save or load")
@@ -54,7 +54,6 @@ train_arg.add_argument('--beta1', type=float, default=0.5, help="beta1")
 train_arg.add_argument('--beta2', type=float, default=0.9, help="beta2")
 train_arg.add_argument('--iteration', type=int, default=100000, help="max iteration")
 train_arg.add_argument('--comment', type=str, default='', help="any comment")
-train_arg.add_argument('--max_batch_utterances', type=int, default=1000, help="number of utterances of one speaker")
 
 config = get_config()
 print(config)           # print all the arguments

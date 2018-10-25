@@ -108,3 +108,5 @@ data/
 nohup*
 *.b
 plo*/
+*.logs
+

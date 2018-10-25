@@ -53,7 +53,7 @@ def train(path):
     # training session
     with tf.Session() as sess:
         tf.global_variables_initializer().run()
-        os.makedirs(os.path.join(path, "Check_Point"), exist_ok=True)  # make folder to save model
+        os.makedirs(os.path.join(path, "Check_Point"))#, exist_ok=True)  # make folder to save model
         os.makedirs(os.path.join(path, "logs"), exist_ok=True)          # make folder to save log
         writer = tf.summary.FileWriter(os.path.join(path, "logs"), sess.graph)
         epoch = 0
@@ -72,11 +72,11 @@ def train(path):
             if (iter+1) % 100 == 0:
                 print("(iter : %d) loss: %.4f" % ((iter+1),loss_acc/100))
                 loss_acc = 0                        # reset accumulated loss
-            if (iter+1) % 10000 == 0:
+            if (iter+1) % 50000 == 0: # Don't decay at 10k, decay it at 50k
                 lr_factor /= 2                      # lr decay
                 print("learning rate is decayed! current lr : ", config.lr*lr_factor)
             if (iter+1) % 10000 == 0:
-                saver.save(sess, os.path.join(path, "./Check_Point/model.ckpt"), global_step=iter//10000)
+                saver.save(sess, os.path.join(path, "./Check_Point/model.ckpt"), global_step=iter//10000, max_to_keep=None)
                 print("model is saved!")
 
 
