@@ -49,7 +49,7 @@ train_arg.add_argument('--M', type=int, default=5, help="number of utterances pe
 train_arg.add_argument('--noise_filenum', type=int, default=16, help="how many noise files will you use")
 train_arg.add_argument('--loss', type=str, default='softmax', help="loss type (softmax or contrast)")
 train_arg.add_argument('--optim', type=str.lower, default='sgd', help="optimizer type")
-train_arg.add_argument('--lr', type=float, default=1e-2, help="learning rate")
+train_arg.add_argument('--lr', type=float, default=1e-3, help="learning rate")
 train_arg.add_argument('--beta1', type=float, default=0.5, help="beta1")
 train_arg.add_argument('--beta2', type=float, default=0.9, help="beta2")
 train_arg.add_argument('--iteration', type=int, default=100000, help="max iteration")
