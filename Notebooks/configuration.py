@@ -25,12 +25,12 @@ data_arg.add_argument('--noise_path', type=str, default='/datadrive2/dalon/diari
 data_arg.add_argument('--train_path', type=str, default='/datadrive2/dalon/diarization-experiments/Speaker_Verification/data/VCTK-Corpus/train', help="train dataset directory")
 data_arg.add_argument('--test_path', type=str, default='/datadrive2/dalon/diarization-experiments/Speaker_Verification/data/VCTK-Corpus/test', help="test dataset directory")
 data_arg.add_argument('--tdsv', type=str2bool, default=False, help="text dependent or not")
-data_arg.add_argument('--sr', type=int, default=8000, help="sampling rate")
+data_arg.add_argument('--sr', type=int, default=16000, help="sampling rate")
 data_arg.add_argument('--nfft', type=int, default=512, help="fft kernel size")
 data_arg.add_argument('--window', type=float, default=0.025, help="window length") # 25ms
 data_arg.add_argument('--hop', type=float, default=0.01, help="hop size") # 10ms
-data_arg.add_argument('--tdsv_frame', type=int, default=80, help="frame number of utterance of tdsv")
-data_arg.add_argument('--tisv_frame', type=int, default=50, help="max frame number of utterances of tdsv")
+data_arg.add_argument('--tdsv_frame', type=int, default=160, help="frame number of utterance of tdsv")
+data_arg.add_argument('--tisv_frame', type=int, default=160, help="max frame number of utterances of tdsv")
 
 # Model Parameters
 model_arg = parser.add_argument_group('Model')
