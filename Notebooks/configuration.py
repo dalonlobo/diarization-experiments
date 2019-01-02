@@ -31,6 +31,7 @@ data_arg.add_argument('--window', type=float, default=0.025, help="window length
 data_arg.add_argument('--hop', type=float, default=0.01, help="hop size") # 10ms
 data_arg.add_argument('--tdsv_frame', type=int, default=160, help="frame number of utterance of tdsv")
 data_arg.add_argument('--tisv_frame', type=int, default=160, help="max frame number of utterances of tdsv")
+data_arg.add_argument('--tisv_frame_min', type=int, default=50, help="min frame length to confirm with 'd-vector v-3 model'")
 
 # Model Parameters
 model_arg = parser.add_argument_group('Model')
@@ -39,7 +40,7 @@ model_arg.add_argument('--proj', type=int, default=256, help="projection dimensi
 model_arg.add_argument('--num_layer', type=int, default=3, help="number of lstm layers")
 model_arg.add_argument('--restore', type=str2bool, default=False, help="restore model or not")
 model_arg.add_argument('--model_path', type=str, default='./tisv_model', help="model directory to save or load")
-model_arg.add_argument('--model_num', type=int, default=6, help="number of ckpt file to load")
+model_arg.add_argument('--model_num', type=int, default=3, help="number of ckpt file to load")
 
 # Training Parameters
 train_arg = parser.add_argument_group('Training')
