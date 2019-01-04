@@ -8,10 +8,9 @@ import librosa
 import pysrt
 import tensorflow as tf
 import numpy as np
-import matplotlib.pyplot as plt
 
 from tensorflow.contrib import rnn
-from utils import normalize, loss_cal, optim
+from utils import normalize
 from sklearn.preprocessing import normalize as sk_normalize
 from sklearn.cluster import KMeans
 from scipy.ndimage.filters import gaussian_filter
@@ -164,7 +163,7 @@ def main():
     with open(config.output_path, 'w') as f:
         json.dump(json_data, f, indent=4)
 
-if __name__ = "__main__":
+if __name__ == "__main__":
     """
     Speaker diarization program:
     input: audio file
@@ -176,3 +175,4 @@ if __name__ = "__main__":
             }
     """
     main()
+    print('Program completed!')

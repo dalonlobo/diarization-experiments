@@ -2,11 +2,9 @@
 
 git clone https://github.com/dalonlobo/diarization-experiments.git
 
-    1. conda env create -f environment.yml
-    2. source activate diarizer
-    3. pip install pysrt
-    4. python Notebooks/full-pipeline.py GkOn86EtdNQ
-
-Change the required paths in full-pipeline.py.
-
+    1. conda create python=3.6 --name diarization-test
+    2. source activate diarization-test
+    3. conda install numpy matplotlib tensorflow scikit-learn scipy
+    4. pip install pysrt librosa
+    
 **Note:** Please use conda for installation. The project is in python 3
