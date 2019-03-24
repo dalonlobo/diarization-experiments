@@ -74,7 +74,7 @@ def main():
                 utterances_spec = []
                 utter_part = utter[current_interval[0]:current_interval[1]]         # save first and last 160 frames of spectrogram.
                 S = librosa.core.stft(y=utter_part, n_fft=config.nfft,
-                                      win_length=int(config.window * sr), hop_length=int(config.hop * sr))
+                                        win_length=int(config.window * sr), hop_length=int(config.hop * sr))
                 S = np.abs(S) ** 2
                 mel_basis = librosa.filters.mel(sr=sr, n_fft=config.nfft, n_mels=40)
                 S = np.log10(np.dot(mel_basis, S) + 1e-6)           # log mel spectrogram of utterances
@@ -147,21 +147,47 @@ def main():
     kmeans = KMeans(n_clusters=config.number_of_speakers, init='k-means++', random_state=config.random_state)
     kmeans.fit(A_eigvec)
     labels = kmeans.labels_
+    OL_INDICATOR = 'OL'
+    SIL_INDICATOR = -1
+    complete_json = {}
     json_data = []
-    for idx, i in enumerate(selected_intervals_idx):
-        start = str(datetime.timedelta(seconds = intervals[i][0] * duration_per_frame))
-        end = str(datetime.timedelta(seconds = intervals[i][1] * duration_per_frame))
-        speaker = labels[idx*2]
-        if labels[idx*2] != labels[(idx*2)+1]:
-            speaker = 'OL' # possible overlap
+    subs = pysrt.open(config.srt_path, encoding="utf-8")
+    convert_to_ms = lambda st: (st.hours * 60 * 60 * 1000) + \
+                                (st.minutes * 60 * 1000) +\
+                                (st.seconds * 1000) +\
+                                (st.milliseconds)
+    for sub in subs:
+        start_in_ms = convert_to_ms(sub.start)
+        end_in_ms = convert_to_ms(sub.end)
+        speakers = []
+        for idx, i in enumerate(selected_intervals_idx):
+            start = intervals[i][0] * duration_per_frame * 1000
+            end = intervals[i][1] * duration_per_frame * 1000
+            if start_in_ms <= start <= end_in_ms:
+                speaker = int(labels[idx*2])
+                if labels[idx*2] != labels[(idx*2)+1]:
+                    speaker = OL_INDICATOR # possible overlap
+                speakers.append(speaker)
         json_data.append({
-            'start': start,
-            'end': end,
-            'speaker': str(speaker)
+            "index": sub.index,
+            "start": sub.start.to_time().strftime("%H:%M:%S,%f")[:-3],
+            "end": sub.end.to_time().strftime("%H:%M:%S,%f")[:-3],
+            'speakers': np.unique(speakers).tolist(),
+            'speakers_distribution': speakers,
+            'text': sub.text
         })
+    metadata = {
+        "overlap_indicator": OL_INDICATOR,
+        "duration": duration,
+        "class_names": np.unique(labels).tolist(),
+        "num_of_speakers": len(set(labels)),
+        "silence_indicator": SIL_INDICATOR
+    }
+    complete_json["metadata"] = metadata
+    complete_json["srt"] = json_data
     # Save the output to json
     with open(config.output_path, 'w') as f:
-        json.dump(json_data, f, indent=4)
+        json.dump(complete_json, f, indent=4)
 
 if __name__ == "__main__":
     """
