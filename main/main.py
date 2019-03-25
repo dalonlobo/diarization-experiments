@@ -147,8 +147,26 @@ def main():
     kmeans = KMeans(n_clusters=config.number_of_speakers, init='k-means++', random_state=config.random_state)
     kmeans.fit(A_eigvec)
     labels = kmeans.labels_
+    output_srt_json = os.path.join(config.output_dir, os.path.basename(config.srt_path) + '.json')
+    output_wav_json = os.path.join(config.output_dir, os.path.basename(config.srt_path) + '.wav.json')
     OL_INDICATOR = 'OL'
     SIL_INDICATOR = -1
+    json_data = []
+    for idx, i in enumerate(selected_intervals_idx):
+        start = str(datetime.timedelta(seconds = intervals[i][0] * duration_per_frame))
+        end = str(datetime.timedelta(seconds = intervals[i][1] * duration_per_frame))
+        speaker = labels[idx*2]
+        if labels[idx*2] != labels[(idx*2)+1]:
+            speaker = 'OL' # possible overlap
+        json_data.append({
+            'start': start,
+            'end': end,
+            'speaker': str(speaker)
+        })
+    # Save the output to json
+    with open(output_wav_json, 'w') as f:
+        json.dump(json_data, f, indent=4)
+
     complete_json = {}
     json_data = []
     subs = pysrt.open(config.srt_path, encoding="utf-8")
@@ -186,7 +204,7 @@ def main():
     complete_json["metadata"] = metadata
     complete_json["srt"] = json_data
     # Save the output to json
-    with open(config.output_path, 'w') as f:
+    with open(output_srt_json, 'w') as f:
         json.dump(complete_json, f, indent=4)
 
 if __name__ == "__main__":

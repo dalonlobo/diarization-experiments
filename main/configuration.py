@@ -43,7 +43,7 @@ model_arg.add_argument('--model_num', type=int, default=3, help="number of ckpt 
 main_arg = parser.add_argument_group('Main')
 main_arg.add_argument('--number_of_speakers', type=int, default=2, help="Number of speakers")
 main_arg.add_argument('--log_path', type=str, default='main.logs')
-main_arg.add_argument('--output_path', required=True, type=str, default='output.json', help="Path to save the output json file")
+main_arg.add_argument('--output_dir', required=True, type=str, default='output.json', help="Path to save the output json file")
 main_arg.add_argument('--audio_file', required=True, type=str, default='xxx.wav', help="Enter the absolute path to audio file")
 main_arg.add_argument('--srt_path', required=True, type=str, default='xxx.en.srt', help="Enter the absolute path to srt file")
 main_arg.add_argument('--model_path', type=str, default='models/model.ckpt-46', help="model directory to save or load")
